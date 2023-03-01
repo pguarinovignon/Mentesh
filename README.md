@@ -5,7 +5,7 @@ These scripts are for replication of the analyses in Guarino-Vignon et al. (2023
 ## Overview
 Scripts are organized into folders by type of analysis: 1.Pre-processing 2.Popgen analysis 3.Kinship analysis
 
-##Input data
+## Input data
 
 ###### Mentesh new genomes: 
 Sequence data for the three individuals are deposited at the ENA, number ERP139757.
