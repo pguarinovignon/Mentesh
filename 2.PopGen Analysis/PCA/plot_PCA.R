@@ -3,21 +3,23 @@ library(plotly)
 library(ggrepel)
 library(ggforce)
 
+#load the data
 d <- read.table('1240v2_HO_NP_final_MDH_laza2022_eurasie_focus_caucase.evec', as.is=TRUE)
 colnames(d)=c('ID','PC1','PC2','PC3','PC4','PC5','PC6','PC7','PC8','PC9','PC10','Group_ID')
 ind_Anc <- read.table('metadata/ancientind_clean.txt', header=T, as.is=TRUE)
 ind_eurasie <- read.table('metadata/eurasie_noEastAsia.txt', header=T, as.is=TRUE)
 group_complet <- read.table('metadata/group_region_time.txt', header = TRUE)
 
+#Subset the data
 Anc = merge(ind_Anc,d)
 eurasie = merge(ind_eurasie,d)
-eurasie_group = merge(eurasie,group_complet)
 MT = subset(d, Group_ID == 'Mentesh')
 Anc1 = subset(Anc, (Region != "SouthAsia" & Region != "Baikal" & Region != "EasternStepppe")  & (Time == "Chalcolithic" | Time == "Mesolithic" |  Time == "Paleolithic"))
 Anc2 = subset(Anc, (Region != "SouthAsia" & Region != "Baikal" & Region != "EasternStepppe") & 
                 (Time == "Neolithic" | Time == "EMBA" | Time == "MLBA" | Time == "IronAge" | Time == "Historical"))
 
 
+#calculate each PC %
 axe = read.table("1240v2_HO_NP_final_MDH_laza2022_eurasie_focus_caucase.eval")
 axe$PC <- seq.int(nrow(axe))
 axe$PCnb <- paste("PC",axe$PC)
@@ -35,7 +37,7 @@ ggplot(axe, aes(PC,V1, label=PCnb))+
   labs(y="eval")
 dev.off()
 
-
+#plot the PCA for PC1, PC2 and PC3
 pdf("ACP_eurasie.pdf", width=12, height=10)
 PCA12 <- ggplot()+
   geom_text(subset(eurasie), mapping = aes(PC1,PC2, label = Group_ID, text = ID), col = 'snow3', size = 2)+
@@ -88,6 +90,7 @@ PCA12
 PCA32
 dev.off()
 
+#plot interactively 
 ggplotly(PCA12)
 ggplotly(PCA32)
 
@@ -115,7 +118,6 @@ add_markers(p1, data = MT,
 
 
 ###zoom on Caucasus
-
 Caucasus_classif = read.table(file = "Caucase_sites.txt", header = T)
 
 Caucasus = merge(Caucase_classif,d)
