@@ -5,9 +5,9 @@ library(ggforce)
 
 d <- read.table('1240v2_HO_NP_final_MDH_laza2022_eurasie_focus_caucase.evec', as.is=TRUE)
 colnames(d)=c('ID','PC1','PC2','PC3','PC4','PC5','PC6','PC7','PC8','PC9','PC10','Group_ID')
-ind_Anc <- read.table('ancientind_clean.txt', header=T, as.is=TRUE)
-ind_eurasie <- read.table('eurasie_noEA_HO.txt', header=T, as.is=TRUE)
-group_complet <- read.table('group_region_time.txt', header = TRUE)
+ind_Anc <- read.table('metadata/ancientind_clean.txt', header=T, as.is=TRUE)
+ind_eurasie <- read.table('metadata/eurasie_noEastAsia.txt', header=T, as.is=TRUE)
+group_complet <- read.table('metadata/group_region_time.txt', header = TRUE)
 
 Anc = merge(ind_Anc,d)
 eurasie = merge(ind_eurasie,d)
