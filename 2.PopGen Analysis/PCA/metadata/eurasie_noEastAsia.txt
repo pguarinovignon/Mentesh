@@ -1,4 +1,3 @@
-Group_ID
 Abazin
 Abkhasian
 Adygei
