@@ -5,7 +5,7 @@ library(Hmisc)
 library(reshape2)
 library(gridExtra)
 
-cv=read.table("sum_CV_HO.txt" , header = T)
+cv=read.table("data/sum_CV_HO.txt" , header = T)
 ggplot(cv, aes(K,CV))+geom_jitter(aes(col = rep, shape = rep),stroke = 2, alpha = 0.5)+geom_boxplot(alpha = 0)+
   scale_color_manual(values = c('rep01'= '#a6cee3','rep11'= '#a6cee3',
                                 'rep02'='#1f78b4','rep12'='#1f78b4',
@@ -32,8 +32,8 @@ ggplot(cv, aes(K,CV))+geom_jitter(aes(col = rep, shape = rep),stroke = 2, alpha 
 
 tbl=read.table("MATRIX_adm_pruned.9.rep05.Q")
 fam=read.table("MATRIX_adm_pruned.fam")
-ind=read.table("ind_group_eurasie_HO.txt", header = T)
-pop=read.table("group_region_time_figure.txt", header = T)
+ind=read.table("data/ind_group_eurasie_HO.txt", header = T)
+pop=read.table("data/group_region_time_figure.txt", header = T)
 col9 = c('darkolivegreen3','red','forestgreen','hotpink','gold','darkslategray4','brown','mistyrose2','purple')
 names(col9) = levels(mdat$Ancestry)
 
