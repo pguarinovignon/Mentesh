@@ -23,9 +23,10 @@ sed -i -e "s/'//g" combination_left_MT_2pop
 sed -i -e "s/)//g" combination_left_MT_2pop
 sed -i -e "s/,//g" combination_left_MT_2pop
 
-N=`wc -l combination_left_MT_2pop`
+COMB2=combination_left_MT_2pop
+LENGTH2=`wc -l ${COMB2}|awk '{print$1}'`
 
-Rscript create_left_right_files.R
+Rscript create_left_right_files.R combination_left_MT_2pop set_1_left right_base MT23 2
 
 echo "DIR: ./
 S1: MATRIX
@@ -38,8 +39,8 @@ details: YES
 allsnps: YES
 inbreed: NO" > qpAdm_rotating_MT23_set1_2pop_1.par
 
-for i in `seq 2 $N` ; do  sed -e "s/left_MT23_set1_2pop_1/left_MT23_set1_2pop_$i/g" qpAdm_rotating_MT23_set1_2pop_1.par > qpAdm_rotating_MT23_set1_2pop_$i.par ; done
-for i in `seq 2 $N` ; do  sed -i -e "s/right_MT23_set1_2pop_1/right_MT23_set1_2pop_$i/g" qpAdm_rotating_MT23_set1_2pop_$i.par ; done
+for i in $(seq 2 "$LENGTH2") ; do  sed -e "s/left_MT23_set1_2pop_1/left_MT23_set1_2pop_$i/g" qpAdm_rotating_MT23_set1_2pop_1.par > qpAdm_rotating_MT23_set1_2pop_$i.par ; done
+for i in $(seq 2 "$LENGTH2") ; do  sed -i -e "s/right_MT23_set1_2pop_1/right_MT23_set1_2pop_$i/g" qpAdm_rotating_MT23_set1_2pop_$i.par ; done
 
 echo "MT23
 MT26
@@ -49,15 +50,15 @@ PLT2
 ARM_Akn
 ARM_MB
 Mentesh" > list.target
-for k in `cat list.target | tail -n 7` ; do 
-  for i in `seq 1 21` ; do
+for k in `cat list.target | tail -n +2` ; do 
+  for i in $(seq 1 "$LENGTH2") ; do
     sed -e "s/MT23/${k}/g" left_MT23_set1_2pop_$i.txt > left_${k}_set1_2pop_$i.txt
     sed -e "s/left_MT23/left_${k}/g" qpAdm_rotating_MT23_set1_2pop_$i.par > qpAdm_rotating_{k}_set1_2pop_$i.par
   done
 done
 
 for k in `cat list.target` ; do 
-  for i in `seq 1 21` ; do 
+  for i in $(seq 1 "$LENGTH2") ; do 
     echo "qpAdm -p qpAdm_rotating_${k}_set1_2pop_$i.par > log_qpAdm_rotating_${k}_set1_2pop_$i.par" ; 
    done ; 
   done | parallel -j 20
@@ -70,9 +71,10 @@ sed -i -e "s/'//g" combination_left_MT_3pop
 sed -i -e "s/)//g" combination_left_MT_3pop
 sed -i -e "s/,//g" combination_left_MT_3pop
 
-N=`wc -l combination_left_MT_3pop`
+COMB3=combination_left_MT_3pop
+LENGTH3=`wc -l ${COMB3}|awk '{print$1}'`
 
-Rscript create_left_right_files_3pop.R
+Rscript create_left_right_files.R combination_left_MT_3pop set_1_left right_base MT23 3
 
 echo "DIR: ./
 S1: MATRIX
@@ -85,29 +87,29 @@ details: YES
 allsnps: YES
 inbreed: NO" > qpAdm_rotating_MT23_set1_3pop_1.par
 
-for i in `seq 2 $N` ; do  sed -e "s/left_MT23_set1_3pop_1/left_MT23_set1_3pop_$i/g" qpAdm_rotating_MT23_set1_3pop_1.par > qpAdm_rotating_MT23_set1_3pop_$i.par ; done
-for i in `seq 2 $N` ; do  sed -i -e "s/right_MT23_set1_3pop_1/right_MT23_set1_3pop_$i/g" qpAdm_rotating_MT23_set1_3pop_$i.par ; done
+for i in $(seq 2 "$LENGTH3") ; do  sed -e "s/left_MT23_set1_3pop_1/left_MT23_set1_3pop_$i/g" qpAdm_rotating_MT23_set1_3pop_1.par > qpAdm_rotating_MT23_set1_3pop_$i.par ; done
+for i in $(seq 2 "$LENGTH3") ; do  sed -i -e "s/right_MT23_set1_3pop_1/right_MT23_set1_3pop_$i/g" qpAdm_rotating_MT23_set1_3pop_$i.par ; done
 
 for k in `cat list.target | tail -n 7` ; do 
-  for i in `seq 1 21` ; do
+  for i in $(seq 1 "$LENGTH3") ; do
     sed -e "s/MT23/${k}/g" left_MT23_set1_3pop_$i.txt > left_${k}_set1_3pop_$i.txt
     sed -e "s/left_MT23/left_${k}/g" qpAdm_rotating_MT23_set1_3pop_$i.par > qpAdm_rotating_{k}_set1_3pop_$i.par
   done
 done
 
 for k in `cat list.target` ; do 
-  for i in `seq 1 21` ; do 
+  for i in $(seq 1 "$LENGTH3") ; do 
     echo "qpAdm -p qpAdm_rotating_${k}_set1_3pop_$i.par > log_qpAdm_rotating_${k}_set1_3pop_$i.par" ; 
    done ; 
   done | parallel -j 20
   
 ######### PARSE THE DATA ##########
 
-COMB2=${DIR}combination_left_MT_2pop
+COMB2=combination_left_MT_2pop
 LENGTH2=`wc -l ${COMB2}|awk '{print$1}'`
-COMB3=${DIR}combination_left_MT_3pop
+COMB3=combination_left_MT_3pop
 LENGTH3=`wc -l ${COMB3}|awk '{print$1}'`
-LIST=${DIR}list.target
+LIST=list.target
 echo "#ID POP1 POP2 p coeff_POP1 coeff_POP2 stderr1 stderr2 nested_model nested_model_p " > ${DIR}results.qpAdm_2pop.txt
 for NAME in `cat ${LIST}`; do
     for i in $(seq 1 "$LENGTH2") ; do
