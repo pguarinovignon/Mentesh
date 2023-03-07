@@ -17,7 +17,7 @@ TUR_SE_Mardin_PPN" > set_1_left
 
 ########## RUN FOR 2 POPS COMBINAISONS ##########
 
-python3 rotation_combination2_left.py > combination_left_MT_2pop
+python3 rotation_combination_Neo_left.py 2 > combination_left_MT_2pop
 sed -i -e "s/(//g" combination_left_MT_2pop
 sed -i -e "s/'//g" combination_left_MT_2pop
 sed -i -e "s/)//g" combination_left_MT_2pop
@@ -64,7 +64,7 @@ for k in `cat list.target` ; do
   
 ########## REDO FOR 3POP COMBINAISONs ##########
 
-python3 rotation_combination3_left.py > combination_left_MT_3pop
+python3 rotation_combination_Neo_left.py 3 > combination_left_MT_3pop
 sed -i -e "s/(//g" combination_left_MT_3pop
 sed -i -e "s/'//g" combination_left_MT_3pop
 sed -i -e "s/)//g" combination_left_MT_3pop
