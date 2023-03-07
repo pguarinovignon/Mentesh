@@ -1,4 +1,4 @@
-ind <- read.table("list_ind_eurasie_HO.txt")
+ind <- read.table("data/list_ind_eurasie_HO.txt")
 colnames(ind) = c("ID")
 
 pedind=read.table("1240v2_HO_NP_final_MDH_laza2022.pedind")
